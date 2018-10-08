@@ -55,6 +55,7 @@ export class FileItem extends Component {
               this.setState({
                 hidden: true
               })
+              this.props.socket.emit('delete_file', file.absolute);
             }}>
               Delete {file.name}
             </A>
@@ -67,9 +68,7 @@ export class FileItem extends Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return {
-    directoriesList: state.directoriesList,
-  };
+  return { directoriesList: state.directoriesList, socket: state.home.socket };
 }
 
 /* istanbul ignore next */

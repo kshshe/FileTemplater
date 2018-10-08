@@ -22,6 +22,7 @@ module.exports = (
         if (!ignore.includes(files[key]) && files[key][0] !== ".") {
           result[files[key]] = {
             name: files[key],
+            absolute: path.resolve(resolvedDir, files[key]),
             dir: fs
               .lstatSync(path.resolve(resolvedDir, files[key]))
               .isDirectory()
