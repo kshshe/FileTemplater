@@ -3,34 +3,30 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import DirectoriesList from '../directories-list/DefaultPage';
+import DirectoryItem from './DirectoryItem';
 
 export class DefaultPage extends Component {
   static propTypes = {
-    home: PropTypes.object.isRequired,
+    directoriesList: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   render() {
-    return <div className="home-default-page">
-        <section className="section">
-          <div className="container is-fluid">
-            <div className="columns">
-              <div className="column is-one-third">
-                <DirectoriesList />
-              </div>
-              <div className="column" />
-            </div>
-          </div>
-        </section>
-      </div>;
+    return (
+      <div className="directories-list-default-page">
+        <nav className="panel">
+          <p className="panel-heading">Files</p>
+          <DirectoryItem />
+        </nav>
+      </div>
+    );
   }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    home: state.home,
+    directoriesList: state.directoriesList,
   };
 }
 

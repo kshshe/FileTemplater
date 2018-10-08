@@ -1,7 +1,7 @@
 import initialState from './initialState';
+import { reducer as connectToSocketReducer } from './connectToSocket';
 
-const reducers = [
-];
+const reducers = [connectToSocketReducer];
 
 export default function reducer(state = initialState, action) {
   let newState;
