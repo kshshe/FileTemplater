@@ -24,6 +24,7 @@
   "homepage": "https://github.com/kshshe/FileTemplater#readme",
   "dependencies": {
     "finalhandler": "^1.1.1",
+    "handlebars": "^4.0.12",
     "json5": "^2.1.0",
     "recursive-readdir": "^2.2.2",
     "serve": "^10.0.2",

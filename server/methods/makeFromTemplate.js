@@ -2,11 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const JSON5 = require("json5");
 const recursive = require("recursive-readdir");
+const Handlebars = require("handlebars");
 
 module.exports = (
   templateName,
   directionDir,
-  params,
+  params = {},
   callback = () => {
     return;
   }
@@ -22,8 +23,6 @@ module.exports = (
       callback(err);
     } else {
       const info = JSON5.parse(contents);
-      console.log(info);
-      console.log(templateFiles);
 
       recursive(templateFiles, function(err, files) {
         if (err) {
@@ -32,8 +31,8 @@ module.exports = (
           for (let key in files) {
             const file = files[key];
             const basename = path.basename(file);
-            console.log({ basename });
             fs.readFile(file, "utf8", function(err, contents) {
+              contents = Handlebars.compile(contents)(params);
               if (err) {
                 console.error(err);
                 callback(err);

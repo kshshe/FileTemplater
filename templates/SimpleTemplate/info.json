@@ -1,0 +1,11 @@
+{
+  "name": "Simple example with template",
+  "description": "No variables, no directories, one simple template file",
+  "params": [
+    {
+      "name": "Name",
+      "key": "name",
+      "type": "string"
+    }
+  ]
+}
