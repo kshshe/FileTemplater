@@ -1,11 +1,12 @@
 import * as commonSagas from '../features/common/redux/sagas';
 import * as directoriesListSagas from '../features/directories-list/redux/sagas';
 import * as homeSagas from '../features/home/redux/sagas';
+import * as templateSelectSagas from '../features/template-select/redux/sagas';
 // This file is auto maintained by rekit-plugin-redux-saga,
 // you usually don't need to manually edit it.
 
 // NOTE: DO NOT chanage featureSagas declearation pattern, it's used by rekit-plugin-redux-saga.
-const featureSagas = [commonSagas, directoriesListSagas, homeSagas];
+const featureSagas = [commonSagas, directoriesListSagas, homeSagas, templateSelectSagas];
 
 const sagas = featureSagas
   .reduce((prev, curr) => [...prev, ...Object.keys(curr).map(k => curr[k])], [])

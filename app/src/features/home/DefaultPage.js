@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import DirectoriesList from '../directories-list/DefaultPage';
+import TemplateSelect from '../template-select/DefaultPage';
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -23,15 +24,14 @@ export class DefaultPage extends Component {
             </div>
           </div>
         </section>
+        {this.props.templateSelect.opened && <TemplateSelect />}
       </div>;
   }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return {
-    home: state.home,
-  };
+  return { home: state.home, templateSelect: state.templateSelect };
 }
 
 /* istanbul ignore next */

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as templateSelectActions from '../template-select/redux/actions';
 import styled from 'styled-components';
 import NextDirectoryItem from './DirectoryItem';
 import FileItem from './FileItem';
@@ -94,31 +95,25 @@ export class DirectoryItem extends Component {
         }
       }
     }
-    return (
-      <Container>
-        <A
-          className="panel-block"
-          margin={margin}
-          onClick={() => {
-            this.setState({
-              expanded: false,
-            });
-          }}
-        >
+    return <Container>
+        <A className="panel-block" margin={margin} onClick={() => {
+            this.setState({ expanded: false });
+          }}>
           <span className="panel-icon">
             <FaMinusSquare />
           </span>
           {keys[keys.length - 1]}/
         </A>
         <Container>
-          <A className="panel-block has-background-grey-lighter" margin={margin + 40}>
-            Create new item in {path || "project root"}
+          <A className="panel-block has-background-grey-lighter" margin={margin + 40} onClick={() => {
+              this.props.actions.openModal(path);
+            }}>
+            Create new item in {path || 'project root'}
           </A>
         </Container>
         {this.renderList(files, path, margin, item => item.dir)}
         {this.renderList(files, path, margin, item => !item.dir)}
-      </Container>
-    );
+      </Container>;
   }
 }
 
@@ -132,9 +127,7 @@ function mapStateToProps(state) {
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch),
-  };
+  return { actions: bindActionCreators({ ...actions, ...templateSelectActions }, dispatch) };
 }
 
 export default connect(

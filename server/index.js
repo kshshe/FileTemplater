@@ -32,9 +32,10 @@ io.on("connection", function(socket) {
   socket.on("*", function(event, data) {
     if (methods[event]) {
       console.log(
-        `event(${(typeof data === "object" ? Object.values(data) : [data]).join(
-          ", "
-        )}, callback)`
+        `${event}(${(typeof data === "object"
+          ? Object.values(data)
+          : [data]
+        ).join(", ")}, callback)`
       );
       methods[event](
         ...(typeof data === "object" ? Object.values(data) : [data]),
