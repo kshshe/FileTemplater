@@ -19,7 +19,6 @@ function handler(req, res) {
 }
 
 const methods = require("./methods");
-methods.make_from_template("SimpleTemplate", "./test_files", { name: "Test" });
 
 io.on("connection", function(socket) {
   var onevent = socket.onevent;
@@ -32,7 +31,7 @@ io.on("connection", function(socket) {
 
   socket.on("*", function(event, data) {
     if (methods[event]) {
-      methods[event](data, result => {
+      methods[event](...Object.values(data), result => {
         socket.emit(event + "_result", result);
       });
     }
