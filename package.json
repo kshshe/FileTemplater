@@ -1,0 +1,35 @@
+{
+  "name": "filetemplater",
+  "version": "0.0.1",
+  "description": "Tool for creating file and/or directories based on custom or shared by other users templates.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshshe/FileTemplater.git"
+  },
+  "keywords": [
+    "templates",
+    "template",
+    "file",
+    "manager"
+  ],
+  "author": "kshshe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kshshe/FileTemplater/issues"
+  },
+  "homepage": "https://github.com/kshshe/FileTemplater#readme",
+  "dependencies": {
+    "husky": "^1.1.1",
+    "precise-commits": "^1.0.2",
+    "prettier": "^1.14.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "precise-commits"
+    }
+  }
+}
