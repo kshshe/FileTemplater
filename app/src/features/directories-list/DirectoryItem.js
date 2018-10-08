@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import styled from 'styled-components';
 import NextDirectoryItem from './DirectoryItem';
+import FileItem from './FileItem';
 import Preloader from '../common/Preloader';
-import { FaPlusSquare, FaMinusSquare, FaFile } from 'react-icons/fa';
+import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import pathBrowser from 'path';
 
 const A = styled.a`
@@ -42,6 +43,19 @@ export class DirectoryItem extends Component {
     );
   }
 
+  renderList(files, path, margin, filter) {
+    return Object.keys(files.children || files).map(key => {
+      const file = (files.children || files)[key];
+      if (!filter(file)) return null;
+      if (file.dir) {
+        return (
+          <NextDirectoryItem key={key} path={pathBrowser.join(path, file.name)} margin={margin} />
+        );
+      }
+      return <FileItem file={file} margin={margin + 15} key={key} />;
+    });
+  }
+
   render() {
     const path = this.props.path || '';
     const margin = (this.props.margin || 0) + 15;
@@ -66,8 +80,7 @@ export class DirectoryItem extends Component {
           <span className="panel-icon">
             <FaPlusSquare />
           </span>
-          ./
-          {keys[keys.length - 1]}
+          {keys[keys.length - 1]}/
         </A>
       );
     }
@@ -95,30 +108,15 @@ export class DirectoryItem extends Component {
           <span className="panel-icon">
             <FaMinusSquare />
           </span>
-          ./
-          {keys[keys.length - 1]}
+          {keys[keys.length - 1]}/
         </A>
-        {Object.keys(files.children || files).map(key => {
-          const file = (files.children || files)[key];
-          if (file.dir) {
-            return (
-              <NextDirectoryItem
-                key={key}
-                path={pathBrowser.join(path, file.name)}
-                margin={margin}
-              />
-            );
-          }
-          return (
-            <A className="panel-block" margin={margin + 15} key={key}>
-              <span className="panel-icon">
-                <FaFile />
-              </span>
-              ./
-              {file.name}
-            </A>
-          );
-        })}
+        <Container>
+          <A className="panel-block has-background-grey-lighter" margin={margin + 40}>
+            Create new item in {path || "project root"}
+          </A>
+        </Container>
+        {this.renderList(files, path, margin, item => item.dir)}
+        {this.renderList(files, path, margin, item => !item.dir)}
       </Container>
     );
   }
