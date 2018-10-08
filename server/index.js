@@ -31,9 +31,17 @@ io.on("connection", function(socket) {
 
   socket.on("*", function(event, data) {
     if (methods[event]) {
-      methods[event](...Object.values(data), result => {
-        socket.emit(event + "_result", result);
-      });
+      console.log(
+        `event(${(typeof data === "object" ? Object.values(data) : [data]).join(
+          ", "
+        )}, callback)`
+      );
+      methods[event](
+        ...(typeof data === "object" ? Object.values(data) : [data]),
+        result => {
+          socket.emit(event + "_result", result);
+        }
+      );
     }
   });
 });
