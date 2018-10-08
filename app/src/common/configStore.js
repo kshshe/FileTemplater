@@ -28,10 +28,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default function configureStore(initialState) {
-  const store = createStore(rootReducer, initialState, compose(
-    applyMiddleware(...middlewares),
-    devToolsExtension
-  ));
+  const store = createStore(
+    rootReducer,
+    initialState,
+    compose(
+      applyMiddleware(...middlewares),
+      devToolsExtension,
+    ),
+  );
 
   /* istanbul ignore if  */
   if (module.hot) {

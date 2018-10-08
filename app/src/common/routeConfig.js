@@ -9,14 +9,16 @@ import directoriesListRoute from '../features/directories-list/route';
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
 const childRoutes = [homeRoute, commonRoute, directoriesListRoute];
 
-const routes = [{
-  path: '/',
-  component: App,
-  childRoutes: [
-    ...childRoutes,
-    { path: '*', name: 'Page not found', component: PageNotFound },
-  ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
-}];
+const routes = [
+  {
+    path: '/',
+    component: App,
+    childRoutes: [
+      ...childRoutes,
+      { path: '*', name: 'Page not found', component: PageNotFound },
+    ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
+  },
+];
 
 // Handle isIndex property of route config:
 //  Dupicate it and put it as the first route rule.
@@ -25,7 +27,7 @@ function handleIndexRoute(route) {
     return;
   }
 
-  const indexRoute = _.find(route.childRoutes, (child => child.isIndex));
+  const indexRoute = _.find(route.childRoutes, child => child.isIndex);
   if (indexRoute) {
     const first = { ...indexRoute };
     first.path = '';
