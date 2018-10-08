@@ -19,6 +19,7 @@ function handler(req, res) {
 }
 
 const methods = require("./methods");
+methods.make_from_template("Simple", "./test_files");
 
 io.on("connection", function(socket) {
   var onevent = socket.onevent;
