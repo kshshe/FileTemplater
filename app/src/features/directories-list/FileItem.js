@@ -23,9 +23,12 @@ export class FileItem extends Component {
 
   state = {
     expanded: false,
+    hidden: false
   };
 
   render() {
+    if (this.state.hidden) return null;
+    
     const { file, margin } = this.props;
 
     return (
@@ -48,7 +51,11 @@ export class FileItem extends Component {
         </A>
         {this.state.expanded && (
           <Container>
-            <A className="panel-block has-background-grey-lighter" margin={margin + 40}>
+            <A className="panel-block has-background-grey-lighter" margin={margin + 40} onClick={() => {
+              this.setState({
+                hidden: true
+              })
+            }}>
               Delete {file.name}
             </A>
           </Container>

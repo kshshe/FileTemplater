@@ -26,7 +26,7 @@ export class DirectoryItem extends Component {
   };
 
   state = {
-    expanded: false,
+    expanded: false
   };
 
   getChildren() {
