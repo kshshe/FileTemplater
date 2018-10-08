@@ -5,7 +5,7 @@ var serveStatic = require("serve-static");
 var finalhandler = require("finalhandler");
 var serve = serveStatic("build", { index: ["index.html"] });
 
-const APP_PORT = Math.round(Math.random() * 1999 + 8000);
+const APP_PORT = 9967; // Math.round(Math.random() * 1999 + 8000);
 
 app.listen(APP_PORT, () => {
   console.log(`http://localhost:${APP_PORT}`);

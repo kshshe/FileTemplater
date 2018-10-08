@@ -1,24 +1,37 @@
 const fs = require("fs");
 const path = require("path");
 
+const ignore = ["node_modules"];
+
 module.exports = (
   dir = "./",
   callback = () => {
     return;
   }
 ) => {
-  dir = path.resolve(dir);
-  fs.readdir(dir, (err, files) => {
+  const resolvedDir = path.resolve(dir);
+  fs.readdir(resolvedDir, (err, files) => {
     if (err) {
-      console.error(err);
-      throw err;
+      callback({
+        path: dir,
+        files: []
+      });
+    } else {
+      let result = {};
+      for (let key in files) {
+        if (!ignore.includes(files[key]) && files[key][0] !== ".") {
+          result[files[key]] = {
+            name: files[key],
+            dir: fs
+              .lstatSync(path.resolve(resolvedDir, files[key]))
+              .isDirectory()
+          };
+        }
+      }
+      callback({
+        path: dir,
+        files: result
+      });
     }
-    files = files.map(file => {
-      return {
-        name: file,
-        dir: fs.lstatSync(file).isDirectory()
-      };
-    });
-    callback(files);
   });
 };

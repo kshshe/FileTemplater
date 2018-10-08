@@ -1,0 +1,1 @@
+export { updateDirData } from './updateDirData';
