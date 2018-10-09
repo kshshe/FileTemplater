@@ -6,7 +6,7 @@ It already working but it have many things to do.
 
 ## Installing
 ```
-sudo npm install filetemplater
+sudo npm install -g filetemplater
 ```
 
 ## Usage
