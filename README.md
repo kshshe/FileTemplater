@@ -27,11 +27,13 @@ filetemplater
 ~/.templates
 ```
 ## Templates structure
+```
 .templates
   TemplateName - any unique name
     info.json - template information
     tmpl - any files. files in this directory will be added to destination folder
-    
+```
+
 ## info.json structure
 ```
 {
