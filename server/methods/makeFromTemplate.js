@@ -3,6 +3,7 @@ const path = require("path");
 const JSON5 = require("json5");
 const recursive = require("recursive-readdir");
 const Handlebars = require("handlebars");
+var shell = require("shelljs");
 
 module.exports = (
   templateName,
@@ -33,27 +34,31 @@ module.exports = (
           for (let key in files) {
             const file = files[key];
             const basename = path.basename(file);
-            const newFileName = Handlebars.compile(basename)(params);
+            const relativeName = path.relative(templateFiles, file);
+            const newFileName = path.resolve(
+              directionDir,
+              Handlebars.compile(relativeName)(params)
+            );
+            console.log({ newFileName });
+            shell.mkdir("-p", path.resolve(path.dirname(newFileName)));
             fs.readFile(file, "utf8", function(err, contents) {
               contents = Handlebars.compile(contents)(params);
               if (err) {
                 console.error(err);
                 callback(err);
               } else {
-                fs.writeFile(
-                  path.resolve(directionDirectory, newFileName),
-                  contents,
-                  function(err) {
-                    filesProcessed++;
-                    if (err) {
-                      callback(err);
-                      console.error(err);
-                    }
-                    if (filesProcessed === filesCount) {
-                      callback({ directionDir });
-                    }
+                fs.writeFile(path.resolve(newFileName), contents, function(
+                  err
+                ) {
+                  filesProcessed++;
+                  if (err) {
+                    callback(err);
+                    console.error(err);
                   }
-                );
+                  if (filesProcessed === filesCount) {
+                    callback({ directionDir });
+                  }
+                });
               }
             });
           }
