@@ -33,6 +33,7 @@ module.exports = (
           for (let key in files) {
             const file = files[key];
             const basename = path.basename(file);
+            const newFileName = Handlebars.compile(basename)(params);
             fs.readFile(file, "utf8", function(err, contents) {
               contents = Handlebars.compile(contents)(params);
               if (err) {
@@ -40,7 +41,7 @@ module.exports = (
                 callback(err);
               } else {
                 fs.writeFile(
-                  path.resolve(directionDirectory, basename),
+                  path.resolve(directionDirectory, newFileName),
                   contents,
                   function(err) {
                     filesProcessed++;
