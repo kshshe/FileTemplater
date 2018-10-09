@@ -31,8 +31,6 @@ module.exports = (
   }
   params.namings = namings;
 
-  console.log(params);
-
   fs.readFile(templateInfo, "utf8", function(err, contents) {
     if (err) {
       console.error(err);
