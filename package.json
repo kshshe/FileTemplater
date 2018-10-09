@@ -30,7 +30,16 @@
     "husky": "^1.1.1",
     "opn": "^5.4.0",
     "precise-commits": "^1.0.2",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "finalhandler": "^1.1.1",
+    "handlebars": "^4.0.12",
+    "json5": "^2.1.0",
+    "minimist": "^1.2.0",
+    "recursive-readdir": "^2.2.2",
+    "serve": "^10.0.2",
+    "serve-static": "^1.13.2",
+    "shelljs": "^0.8.2",
+    "socket.io": "^2.1.1"
   },
   "husky": {
     "hooks": {
