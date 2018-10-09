@@ -2,12 +2,13 @@
 
 const spawn = require("child_process").spawn;
 const path = require("path");
+
 let server = null;
 
 function start() {
   server = spawn("node", [
     path.resolve(__dirname, "../server/index"),
-    `--fileRoot=${__dirname}`
+    `--fileRoot=${path.resolve(__dirname, "../")}`
   ]);
 
   server.stdout.on("data", data => {

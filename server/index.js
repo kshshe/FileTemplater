@@ -7,14 +7,17 @@ const path = require("path");
 var serve = serveStatic(path.resolve(__dirname, "build"), {
   index: ["index.html"]
 });
+var opn = require("opn");
 
 var argv = require("minimist")(process.argv.slice(2));
 global.fileRoot = argv.fileRoot;
 
-const APP_PORT = 9967; // Math.round(Math.random() * 1999 + 8000);
+const APP_PORT = Math.round(Math.random() * 1999 + 8000);
 
 app.listen(APP_PORT, () => {
-  console.log(`http://localhost:${APP_PORT}`);
+  const url = `http://localhost:${APP_PORT}`;
+  console.log(url);
+  opn(url);
 });
 
 function handler(req, res) {
@@ -34,12 +37,6 @@ io.on("connection", function(socket) {
 
   socket.on("*", function(event, data) {
     if (methods[event]) {
-      console.log(
-        `${event}(${(typeof data === "object"
-          ? Object.values(data)
-          : [data]
-        ).join(", ")}, callback)`
-      );
       methods[event](
         ...(typeof data === "object" ? Object.values(data) : [data]),
         result => {
