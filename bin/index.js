@@ -6,7 +6,7 @@ let server = null;
 
 function start() {
   server = spawn("node", [
-    path.resolve(__dirname, "server/index"),
+    path.resolve(__dirname, "../server/index"),
     `--fileRoot=${__dirname}`
   ]);
 
