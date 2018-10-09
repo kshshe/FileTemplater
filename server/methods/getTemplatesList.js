@@ -8,7 +8,7 @@ module.exports = (
     return;
   }
 ) => {
-  const resolvedDir = path.resolve("./", "templates");
+  const resolvedDir = path.resolve(global.fileRoot, "templates");
   fs.readdir(resolvedDir, (err, files) => {
     let result = [];
     if (err) {
@@ -20,7 +20,7 @@ module.exports = (
         const basename = path.basename(files[key]);
 
         fs.readFile(
-          path.resolve("./", "templates", basename, "info.json"),
+          path.resolve(global.fileRoot, "templates", basename, "info.json"),
           "utf8",
           function(err, contents) {
             filesProcessed++;

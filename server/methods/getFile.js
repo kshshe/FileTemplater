@@ -8,7 +8,10 @@ module.exports = (
   }
 ) => {
   if (file) {
-    fs.readFile(path.resolve("./", file), "utf8", function(err, contents) {
+    fs.readFile(path.resolve(global.fileRoot, file), "utf8", function(
+      err,
+      contents
+    ) {
       callback({
         filename: file,
         contents

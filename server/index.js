@@ -8,6 +8,9 @@ var serve = serveStatic(path.resolve(__dirname, "build"), {
   index: ["index.html"]
 });
 
+var argv = require("minimist")(process.argv.slice(2));
+global.fileRoot = argv.fileRoot;
+
 const APP_PORT = 9967; // Math.round(Math.random() * 1999 + 8000);
 
 app.listen(APP_PORT, () => {
