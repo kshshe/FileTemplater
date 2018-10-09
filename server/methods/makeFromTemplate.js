@@ -13,7 +13,7 @@ module.exports = (
     return;
   }
 ) => {
-  const templateDir = path.resolve(global.fileRoot, "templates", templateName);
+  const templateDir = path.resolve(global.userRoot, ".templates", templateName);
   const templateInfo = path.resolve(templateDir, "info.json");
   const templateFiles = path.resolve(templateDir, "tmpl");
   const directionDirectory = path.resolve(global.fileRoot, directionDir);
@@ -39,7 +39,6 @@ module.exports = (
               directionDir,
               Handlebars.compile(relativeName)(params)
             );
-            console.log({ newFileName });
             shell.mkdir("-p", path.resolve(path.dirname(newFileName)));
             fs.readFile(file, "utf8", function(err, contents) {
               contents = Handlebars.compile(contents)(params);

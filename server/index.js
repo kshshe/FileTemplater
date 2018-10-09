@@ -8,15 +8,30 @@ var serve = serveStatic(path.resolve(__dirname, "build"), {
   index: ["index.html"]
 });
 var opn = require("opn");
+var shell = require("shelljs");
 
 var argv = require("minimist")(process.argv.slice(2));
 global.fileRoot = argv.fileRoot;
+global.userRoot = require("os").homedir();
+
+fs.exists(path.resolve(userRoot, ".templates"), function(exists) {
+  if (!exists) {
+    shell.cp(
+      "-R",
+      path.resolve(fileRoot, "templates"),
+      path.resolve(userRoot, ".templates")
+    );
+  }
+});
 
 const APP_PORT = Math.round(Math.random() * 1999 + 8000);
 
 app.listen(APP_PORT, () => {
   const url = `http://localhost:${APP_PORT}`;
   console.log(url);
+  console.log(
+    `Your templates are here: ${path.resolve(userRoot, ".templates")}`
+  );
   opn(url);
 });
 
