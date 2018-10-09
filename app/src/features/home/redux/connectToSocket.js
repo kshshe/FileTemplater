@@ -25,7 +25,7 @@ export function dismissConnectToSocketError() {
 }
 
 export function connect() {
-  var socket = io.connect('http://localhost:9967');
+  var socket = io.connect();
   return new Promise(resolve => {
     socket.on('connect', () => {
       resolve(socket);
