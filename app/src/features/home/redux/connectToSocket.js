@@ -7,6 +7,7 @@ import {
   HOME_CONNECT_TO_SOCKET_DISMISS_ERROR,
 } from './constants';
 import { updateDirData } from '../../directories-list/redux/actions';
+import { updateTemplatesList } from '../../template-select/redux/actions';
 import io from 'socket.io-client';
 
 export function connectToSocket() {
@@ -35,6 +36,12 @@ export function subscribe(socket) {
   return eventChannel(emit => {
     socket.on('get_files_list_result', data => {
       emit(updateDirData(data.path, data.files));
+    });
+    socket.on('make_from_template_result', data => {
+      socket.emit('get_files_list', data.directionDir);
+    });
+    socket.on('get_templates_list_result', data => {
+      emit(updateTemplatesList(data));
     });
     return () => {};
   });

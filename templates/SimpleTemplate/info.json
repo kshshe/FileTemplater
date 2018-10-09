@@ -5,7 +5,7 @@
     {
       "name": "Name",
       "key": "name",
-      "type": "string"
+      "help": "Any string value"
     }
   ]
 }

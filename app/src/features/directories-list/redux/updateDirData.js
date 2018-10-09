@@ -14,7 +14,6 @@ export function updateDirData(path, files) {
 
 export function updateAtKey(data, key, newValue) {
   let newData = typeof data === 'object' ? { ...data } : [...data];
-  console.log(newData, key)
   let keys = key.split('.');
   let firstKey = keys.splice(0, 1)[0];
   if (newData.dir) {

@@ -13,19 +13,24 @@ export class DefaultPage extends Component {
   };
 
   render() {
-    return <div className="home-default-page">
+    return (
+      <div className="home-default-page">
         <section className="section">
           <div className="container is-fluid">
             <div className="columns">
               <div className="column is-one-third">
                 <DirectoriesList />
               </div>
-              <div className="column" />
+              {this.props.templateSelect.opened && (
+                <div className="column">
+                  <TemplateSelect />
+                </div>
+              )}
             </div>
           </div>
         </section>
-        {this.props.templateSelect.opened && <TemplateSelect />}
-      </div>;
+      </div>
+    );
   }
 }
 

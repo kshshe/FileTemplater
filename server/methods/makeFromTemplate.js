@@ -28,6 +28,8 @@ module.exports = (
         if (err) {
           console.error(err);
         } else {
+          let filesCount = files.length;
+          let filesProcessed = 0;
           for (let key in files) {
             const file = files[key];
             const basename = path.basename(file);
@@ -41,9 +43,13 @@ module.exports = (
                   path.resolve(directionDirectory, basename),
                   contents,
                   function(err) {
+                    filesProcessed++;
                     if (err) {
                       callback(err);
                       console.error(err);
+                    }
+                    if (filesProcessed === filesCount) {
+                      callback({ directionDir });
                     }
                   }
                 );
