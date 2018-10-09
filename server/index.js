@@ -4,7 +4,7 @@ var fs = require("fs");
 var serveStatic = require("serve-static");
 var finalhandler = require("finalhandler");
 const path = require("path");
-var serve = serveStatic(path.resolve(__dirname, "build"), {
+var serve = serveStatic(path.resolve(__dirname, "../app/build"), {
   index: ["index.html"]
 });
 var opn = require("opn");

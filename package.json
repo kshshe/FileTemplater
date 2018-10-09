@@ -29,13 +29,11 @@
   "dependencies": {
     "finalhandler": "^1.1.1",
     "handlebars": "^4.0.12",
-    "husky": "^1.1.1",
     "json5": "^2.1.0",
     "minimist": "^1.2.0",
     "naming": "^1.0.6",
     "opn": "^5.4.0",
     "precise-commits": "^1.0.2",
-    "prettier": "^1.14.3",
     "recursive-readdir": "^2.2.2",
     "serve": "^10.0.2",
     "serve-static": "^1.13.2",
@@ -46,5 +44,10 @@
     "hooks": {
       "pre-commit": "precise-commits"
     }
+  },
+  "devDependencies": {
+    "husky": "^1.1.1",
+    "precise-commits": "^1.0.2",
+    "prettier": "^1.14.3"
   }
 }
