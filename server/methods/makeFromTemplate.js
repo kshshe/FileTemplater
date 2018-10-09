@@ -3,7 +3,8 @@ const path = require("path");
 const JSON5 = require("json5");
 const recursive = require("recursive-readdir");
 const Handlebars = require("handlebars");
-var shell = require("shelljs");
+const shell = require("shelljs");
+const naming = require("naming");
 
 module.exports = (
   templateName,
@@ -17,6 +18,20 @@ module.exports = (
   const templateInfo = path.resolve(templateDir, "info.json");
   const templateFiles = path.resolve(templateDir, "tmpl");
   const directionDirectory = path.resolve(global.fileRoot, directionDir);
+
+  let namings = {};
+  for (let key in params) {
+    namings[key] = {
+      camel: naming(params[key], "camel"),
+      pascal: naming(params[key], "pascal"),
+      snake: naming(params[key], "snake"),
+      kebab: naming(params[key], "kebab"),
+      caps: naming(params[key], "caps")
+    };
+  }
+  params.namings = namings;
+
+  console.log(params);
 
   fs.readFile(templateInfo, "utf8", function(err, contents) {
     if (err) {
