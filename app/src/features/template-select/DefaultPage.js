@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Preloader from '../common/Preloader';
+import Input from './Input';
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -40,24 +41,18 @@ export class DefaultPage extends Component {
                   <div className="content">{selected.info.description}</div>
                   {selected.info.params.map((param, key) => {
                     return (
-                      <div className="field" key={key}>
-                        <label className="label">{param.name}</label>
-                        <div className="control">
-                          <input
-                            className="input"
-                            type="text"
-                            value={this.state.currentValues[param.key] || ''}
-                            onChange={e => {
-                              let newValues = { ...this.state.currentValues };
-                              newValues[param.key] = e.target.value;
-                              this.setState({
-                                currentValues: newValues,
-                              });
-                            }}
-                          />
-                        </div>
-                        <p className="help">{param.help}</p>
-                      </div>
+                      <Input
+                        key={key}
+                        {...param}
+                        value={this.state.currentValues[param.key]}
+                        onChange={value => {
+                          let newValues = { ...this.state.currentValues };
+                          newValues[param.key] = value;
+                          this.setState({
+                            currentValues: newValues,
+                          });
+                        }}
+                      />
                     );
                   })}
                 </div>

@@ -5,7 +5,15 @@
     {
       "name": "Name",
       "key": "name",
-      "help": "Any string value"
+      "help": "Any string value",
+      "type": "text"
+    },
+    {
+      "name": "Select",
+      "key": "select",
+      "type": "select",
+      "options": ["Option 1", "Option 2"],
+      "help": "Select value"
     }
   ]
 }
