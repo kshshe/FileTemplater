@@ -1,5 +1,6 @@
 # FileTemplater
 Tool for creating file and/or directories based on custom or shared by other users templates.
+[![NPM](https://nodei.co/npm/filetemplater.png)](https://nodei.co/npm/filetemplater/)
 
 ## FileTemplater is currently in development
 It already working but it have many things to do.
