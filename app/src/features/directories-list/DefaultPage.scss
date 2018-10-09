@@ -1,5 +1,7 @@
 @import '../../styles/mixins';
 
 .directories-list-default-page {
-
+  .panel {
+    max-height: calc(100vh - 7rem);
+  }
 }
