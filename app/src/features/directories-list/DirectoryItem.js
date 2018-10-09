@@ -53,7 +53,7 @@ export class DirectoryItem extends Component {
           <NextDirectoryItem key={key} path={pathBrowser.join(path, file.name)} margin={margin} />
         );
       }
-      return <FileItem file={file} margin={margin + 15} key={key} />;
+      return <FileItem file={file} margin={margin} key={key} />;
     });
   }
 
