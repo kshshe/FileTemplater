@@ -9,6 +9,6 @@ module.exports = (
 ) => {
   if (file) fs.unlink(file, () => {});
   callback({
-    directionDir: path.relative("./", path.dirname(file))
+    directionDir: path.relative(global.fileRoot, path.dirname(file))
   });
 };

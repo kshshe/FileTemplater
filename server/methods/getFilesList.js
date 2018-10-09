@@ -4,7 +4,7 @@ const path = require("path");
 const ignore = ["node_modules"];
 
 module.exports = (
-  dir = "./",
+  dir = global.fileRoot,
   callback = () => {
     return;
   }

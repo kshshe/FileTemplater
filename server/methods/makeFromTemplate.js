@@ -13,10 +13,10 @@ module.exports = (
     return;
   }
 ) => {
-  const templateDir = path.resolve("./", "templates", templateName);
+  const templateDir = path.resolve(global.fileRoot, "templates", templateName);
   const templateInfo = path.resolve(templateDir, "info.json");
   const templateFiles = path.resolve(templateDir, "tmpl");
-  const directionDirectory = path.resolve("./", directionDir);
+  const directionDirectory = path.resolve(global.fileRoot, directionDir);
 
   fs.readFile(templateInfo, "utf8", function(err, contents) {
     if (err) {

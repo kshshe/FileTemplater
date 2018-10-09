@@ -26,6 +26,7 @@
     "finalhandler": "^1.1.1",
     "handlebars": "^4.0.12",
     "json5": "^2.1.0",
+    "minimist": "^1.2.0",
     "recursive-readdir": "^2.2.2",
     "serve": "^10.0.2",
     "serve-static": "^1.13.2",
