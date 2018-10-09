@@ -5,6 +5,13 @@ Tool for creating file and/or directories based on custom or shared by other use
 ## FileTemplater is currently in development
 It already working but it have many things to do.
 
+### TODO:
+- Code testing
+- Template manager in web interface
+- Lists in input types
+- Sharing templates
+- Better interface
+
 ## Installing
 ```
 sudo npm install -g filetemplater
