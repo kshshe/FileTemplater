@@ -7,5 +7,8 @@ module.exports = (
     return;
   }
 ) => {
-  if (file) fs.unlink(file, callback);
+  if (file) fs.unlink(file, () => {});
+  callback({
+    directionDir: path.relative("./", path.dirname(file))
+  });
 };

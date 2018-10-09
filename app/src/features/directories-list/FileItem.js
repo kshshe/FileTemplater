@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as filePreviewActions from '../file-preview/redux/actions';
 import styled from 'styled-components';
 import { FaFile } from 'react-icons/fa';
-import classNames from 'classnames';
 
 const A = styled.a`
   padding-left: ${props => props.margin}px !important;
@@ -21,27 +21,16 @@ export class FileItem extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-  state = {
-    expanded: false,
-    hidden: false
-  };
-
-  render() {
-    if (this.state.hidden) return null;
-    
+  render() {    
     const { file, margin } = this.props;
 
     return (
       <Container>
         <A
-          className={classNames('panel-block', {
-            'is-active': this.state.expanded,
-          })}
+          className='panel-block'
           margin={margin + 15}
           onClick={() => {
-            this.setState({
-              expanded: !this.state.expanded,
-            });
+            this.props.actions.setFile(file.absolute)
           }}
         >
           <span className="panel-icon">
@@ -49,18 +38,6 @@ export class FileItem extends Component {
           </span>
           {file.name}
         </A>
-        {this.state.expanded && (
-          <Container>
-            <A className="panel-block has-background-grey-lighter" margin={margin + 40} onClick={() => {
-              this.setState({
-                hidden: true
-              })
-              this.props.socket.emit('delete_file', file.absolute);
-            }}>
-              Delete {file.name}
-            </A>
-          </Container>
-        )}
       </Container>
     );
   }
@@ -74,7 +51,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, setFile: filePreviewActions.setFile }, dispatch),
   };
 }
 

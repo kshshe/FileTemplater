@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import DirectoriesList from '../directories-list/DefaultPage';
 import TemplateSelect from '../template-select/DefaultPage';
+import FilePreview from '../file-preview/DefaultPage';
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -26,6 +27,9 @@ export class DefaultPage extends Component {
                   <TemplateSelect />
                 </div>
               )}
+              {this.props.filePreview.opened && (
+                <div className="column"><FilePreview /></div>
+              )}
             </div>
           </div>
         </section>
@@ -36,7 +40,7 @@ export class DefaultPage extends Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return { home: state.home, templateSelect: state.templateSelect };
+  return { home: state.home, templateSelect: state.templateSelect, filePreview: state.filePreview };
 }
 
 /* istanbul ignore next */

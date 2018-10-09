@@ -5,10 +5,11 @@ import commonRoute from '../features/common/route';
 import _ from 'lodash';
 import directoriesListRoute from '../features/directories-list/route';
 import templateSelectRoute from '../features/template-select/route';
+import filePreviewRoute from '../features/file-preview/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
-const childRoutes = [homeRoute, commonRoute, directoriesListRoute, templateSelectRoute];
+const childRoutes = [homeRoute, commonRoute, directoriesListRoute, templateSelectRoute, filePreviewRoute];
 
 const routes = [
   {

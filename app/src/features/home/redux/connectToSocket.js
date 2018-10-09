@@ -8,6 +8,7 @@ import {
 } from './constants';
 import { updateDirData } from '../../directories-list/redux/actions';
 import { updateTemplatesList } from '../../template-select/redux/actions';
+import { setFile } from '../../file-preview/redux/actions';
 import io from 'socket.io-client';
 
 export function connectToSocket() {
@@ -40,8 +41,14 @@ export function subscribe(socket) {
     socket.on('make_from_template_result', data => {
       socket.emit('get_files_list', data.directionDir);
     });
+    socket.on('delete_file_result', data => {
+      socket.emit('get_files_list', data.directionDir);
+    });
     socket.on('get_templates_list_result', data => {
       emit(updateTemplatesList(data));
+    });
+    socket.on('get_file_result', data => {
+      emit(setFile(data.filename, data.contents));
     });
     return () => {};
   });

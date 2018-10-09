@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import * as templateSelectActions from '../template-select/redux/actions';
+import * as filePreviewActions from '../file-preview/redux/actions';
 import styled from 'styled-components';
 import NextDirectoryItem from './DirectoryItem';
 import FileItem from './FileItem';
@@ -107,6 +108,7 @@ export class DirectoryItem extends Component {
         <Container>
           <A className="panel-block has-background-grey-lighter" margin={margin + 40} onClick={() => {
               this.props.actions.openModal(path);
+              this.props.actions.closeFile();
             }}>
             Create new item in {path || 'project root'}
           </A>
@@ -127,7 +129,7 @@ function mapStateToProps(state) {
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({ ...actions, ...templateSelectActions }, dispatch) };
+  return { actions: bindActionCreators({ ...actions, ...templateSelectActions, closeFile: filePreviewActions.closeFile }, dispatch) };
 }
 
 export default connect(
