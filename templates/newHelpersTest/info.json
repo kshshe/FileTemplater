@@ -1,0 +1,18 @@
+{
+  "name": "File list",
+  "description": "List of directories with camelCase name",
+  "params": [
+    {
+      "name": "Name",
+      "key": "name",
+      "help": "Name",
+      "type": "text"
+    },
+    {
+      "name": "List",
+      "key": "list",
+      "help": "List",
+      "type": "list"
+    }
+  ]
+}
