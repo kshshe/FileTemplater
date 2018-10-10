@@ -1,6 +1,6 @@
 {
   "name": "filetemplater",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Tool for creating file and/or directories based on custom or shared by other users templates.",
   "main": "index.js",
   "scripts": {
