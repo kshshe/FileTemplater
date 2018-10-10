@@ -25,7 +25,11 @@ export function dismissConnectToSocketError() {
 }
 
 export function connect() {
-  var socket = io.connect();
+  let devSocketUrl = "";
+  if (localStorage) {
+    devSocketUrl = localStorage.getItem("devSocketUrl") || "";
+  }
+  var socket = io.connect(devSocketUrl);
   return new Promise(resolve => {
     socket.on('connect', () => {
       resolve(socket);

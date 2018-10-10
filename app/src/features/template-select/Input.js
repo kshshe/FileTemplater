@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 export default class Input extends Component {
   static propTypes = {};
 
+  constructor(props) {
+    super(props);
+  }
+
   renderText(data) {
     return (
       <input
@@ -38,6 +42,24 @@ export default class Input extends Component {
     );
   }
 
+  renderList(data) {
+    return (
+      <div>
+        <input
+          className="input"
+          type="text"
+          value={data.value || ''}
+          onChange={e => {
+            if (this.props.onChange) {
+              this.props.onChange(e.target.value);
+            }
+          }}
+        />
+        <p className="help">Comma-separated list</p>
+      </div>
+    );
+  }
+
   render() {
     const data = this.props;
     return (
@@ -48,6 +70,8 @@ export default class Input extends Component {
             switch (data.type) {
               case 'select':
                 return this.renderSelect(data);
+              case 'list':
+                return this.renderList(data);
               default:
                 return this.renderText(data);
             }

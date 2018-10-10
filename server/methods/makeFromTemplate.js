@@ -5,6 +5,27 @@ const recursive = require("recursive-readdir");
 const Handlebars = require("handlebars");
 const shell = require("shelljs");
 const naming = require("naming");
+const regex = /#each-([^#]*)#/m;
+
+Handlebars.registerHelper("camelCase", function(text) {
+  return naming(text, "camel");
+});
+
+Handlebars.registerHelper("PascalCase", function(text) {
+  return naming(text, "pascal");
+});
+
+Handlebars.registerHelper("snake_case", function(text) {
+  return naming(text, "snake");
+});
+
+Handlebars.registerHelper("kebab-case", function(text) {
+  return naming(text, "kebab");
+});
+
+Handlebars.registerHelper("CAPS", function(text) {
+  return naming(text, "caps");
+});
 
 module.exports = (
   templateName,
@@ -37,6 +58,16 @@ module.exports = (
       callback(err);
     } else {
       const info = JSON5.parse(contents);
+      for (let key in info.params) {
+        if (info.params[key].type === "list") {
+          if (params[info.params[key].key]) {
+            params[info.params[key].key] = params[info.params[key].key]
+              .split(",")
+              .map(item => item.toString().trim())
+              .filter(item => item !== "");
+          }
+        }
+      }
 
       recursive(templateFiles, function(err, files) {
         if (err) {
@@ -48,29 +79,77 @@ module.exports = (
             const file = files[key];
             const basename = path.basename(file);
             const relativeName = path.relative(templateFiles, file);
-            const newFileName = path.resolve(
-              directionDir,
-              Handlebars.compile(relativeName)(params)
-            );
-            shell.mkdir("-p", path.resolve(path.dirname(newFileName)));
             fs.readFile(file, "utf8", function(err, contents) {
               contents = Handlebars.compile(contents)(params);
               if (err) {
                 console.error(err);
                 callback(err);
               } else {
-                fs.writeFile(path.resolve(newFileName), contents, function(
-                  err
-                ) {
-                  filesProcessed++;
-                  if (err) {
-                    callback(err);
-                    console.error(err);
+                const newFileName = path.resolve(
+                  directionDir,
+                  Handlebars.compile(relativeName)(params)
+                );
+
+                let newFileNames = [newFileName];
+
+                let done = false;
+                let fileKey = 0;
+                while (!done) {
+                  const currentFileName = newFileNames[fileKey];
+                  if (currentFileName) {
+                    if ((m = regex.exec(currentFileName)) !== null) {
+                      const key = m[1];
+                      if (params[key]) {
+                        if (typeof params[key] === "string") {
+                          newFileNames[fileKey] = currentFileName
+                            .split(`#each-${key}#`)
+                            .join(params[key]);
+                        } else {
+                          newFileNames.splice(fileKey, 1);
+                          for (let listKey in params[key]) {
+                            let newName = currentFileName.replace(
+                              `#each-${key}#`,
+                              params[key][listKey]
+                            );
+                            newFileNames.push(newName);
+                          }
+                          fileKey = 0;
+                        }
+                      }
+                    } else {
+                      fileKey++;
+                      if (newFileNames.length <= fileKey) {
+                        done = true;
+                      }
+                    }
+                  } else {
+                    done = true;
                   }
-                  if (filesProcessed === filesCount) {
-                    callback({ directionDir });
-                  }
-                });
+                }
+
+                const fileNamesCount = newFileNames.length;
+                let fileNamesProcessed = 0;
+
+                for (let key in newFileNames) {
+                  let newFileName = newFileNames[key];
+
+                  shell.mkdir("-p", path.resolve(path.dirname(newFileName)));
+                  fs.writeFile(path.resolve(newFileName), contents, function(
+                    err
+                  ) {
+                    fileNamesProcessed++;
+                    if (fileNamesProcessed === fileNamesCount) {
+                      filesProcessed++;
+                    }
+                    if (err) {
+                      callback(err);
+                      console.error(err);
+                    }
+                    if (filesProcessed === filesCount) {
+                      callback({ directionDir });
+                    }
+                  });
+                }
               }
             });
           }
