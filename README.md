@@ -92,8 +92,8 @@ List: {{#each list}}
 With helpers
 camelCaseName: {{camelCase name}}
 PascalCaseSelect: {{PascalCase select}}
-snake_case_name: {{snake_case name}}
-kebab-case-select: {{kebab-case select}}
+snake-case-name: {{snake-case name}}
+kebab_case_select: {{kebab_case select}}
 caps-list: {{#each list}}
     {{CAPS this}}{{/each}}
 ```
@@ -112,8 +112,8 @@ List:
 With helpers
 camelCaseName: fooBar
 PascalCaseSelect: OptionThatISelect
-snake_case_name: foo-bar
-kebab-case-select: option_that_i_select
+snake-case-name: foo-bar
+kebab_case_select: option_that_i_select
 caps-list:
     LIST_ITEM_1
     LIST_ITEM_2

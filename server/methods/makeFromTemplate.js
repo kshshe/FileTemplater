@@ -15,11 +15,11 @@ Handlebars.registerHelper("PascalCase", function(text) {
   return naming(text, "pascal");
 });
 
-Handlebars.registerHelper("snake_case", function(text) {
+Handlebars.registerHelper("snake-case", function(text) {
   return naming(text, "snake");
 });
 
-Handlebars.registerHelper("kebab-case", function(text) {
+Handlebars.registerHelper("kebab_case", function(text) {
   return naming(text, "kebab");
 });
 
