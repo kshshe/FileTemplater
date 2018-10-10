@@ -154,8 +154,6 @@ module.exports = (
                     currentListItem: currentListItems[key]
                   };
 
-                  console.log(fileParams);
-
                   const fileContents = Handlebars.compile(contents)(fileParams);
                   fs.writeFile(
                     path.resolve(newFileName),
