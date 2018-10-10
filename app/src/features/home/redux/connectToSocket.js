@@ -25,9 +25,9 @@ export function dismissConnectToSocketError() {
 }
 
 export function connect() {
-  let devSocketUrl = "";
+  let devSocketUrl = '';
   if (localStorage) {
-    devSocketUrl = localStorage.getItem("devSocketUrl") || "";
+    devSocketUrl = localStorage.getItem('devSocketUrl') || '';
   }
   var socket = io.connect(devSocketUrl);
   return new Promise(resolve => {

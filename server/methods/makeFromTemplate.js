@@ -5,7 +5,7 @@ const recursive = require("recursive-readdir");
 const Handlebars = require("handlebars");
 const shell = require("shelljs");
 const naming = require("naming");
-const regex = /#each-([^#]*)#/m;
+const regex = /#each-([^#_]*)(_([^#]*))?#/m;
 
 Handlebars.registerHelper("camelCase", function(text) {
   return naming(text, "camel");
@@ -99,17 +99,34 @@ module.exports = (
                   if (currentFileName) {
                     if ((m = regex.exec(currentFileName)) !== null) {
                       const key = m[1];
+                      const keyNamingBlock = m[2] || "";
+                      const keyNaming = m[3];
                       if (params[key]) {
                         if (typeof params[key] === "string") {
+                          let newValue = "";
+                          if (keyNaming) {
+                            newValue = naming(params[key], keyNaming);
+                          } else {
+                            newValue = params[key];
+                          }
                           newFileNames[fileKey] = currentFileName
-                            .split(`#each-${key}#`)
-                            .join(params[key]);
+                            .split(`#each-${key}${keyNamingBlock}#`)
+                            .join(newValue);
                         } else {
                           newFileNames.splice(fileKey, 1);
                           for (let listKey in params[key]) {
+                            let newValue = "";
+                            if (keyNaming) {
+                              newValue = naming(
+                                params[key][listKey],
+                                keyNaming
+                              );
+                            } else {
+                              newValue = params[key][listKey];
+                            }
                             let newName = currentFileName.replace(
-                              `#each-${key}#`,
-                              params[key][listKey]
+                              `#each-${key}${keyNamingBlock}#`,
+                              newValue
                             );
                             newFileNames.push(newName);
                           }
