@@ -60,11 +60,11 @@ filetemplater
 }
 ```
 
-## Template data
+## Templates
 
 All data in files into tmpl directory parsed by [handlebars](https://www.npmjs.com/package/handlebars) package.
 
-## Example
+# Examples
 
 ### Data
 
@@ -83,25 +83,43 @@ All data in files into tmpl directory parsed by [handlebars](https://www.npmjs.c
 ### Template
 
 ```
-Raw data:
+Raw data
 Name: {{name}}
 Select: {{select}}
 List: {{#each list}}
-    {{@index}}: {{this}}
-{{/each}}
+    {{@index}}: {{this}}{{/each}}
 
-With helpers:
+With helpers
 camelCaseName: {{camelCase name}}
 PascalCaseSelect: {{PascalCase select}}
 snake_case_name: {{snake_case name}}
 kebab-case-select: {{kebab-case select}}
 caps-list: {{#each list}}
-    {{CAPS this}}
-{{/each}}
+    {{CAPS this}}{{/each}}
 ```
 
 ### Output
 
 ```
+Raw data
+Name: FooBar
+Select: OptionThatISelect
+List:
+    0: ListItem1
+    1: listItem2
+    2: list-item-three
 
+With helpers
+camelCaseName: fooBar
+PascalCaseSelect: OptionThatISelect
+snake_case_name: foo-bar
+kebab-case-select: option_that_i_select
+caps-list:
+    LIST_ITEM_1
+    LIST_ITEM_2
+    LIST_ITEM_THREE
 ```
+
+### File lists
+
+If you want to make list of files, make filename like this: `#each-yourPropertyName#.txt` or `#each-yourPropertyName_naming#.txt` (naming may be camel, pascal, sname, kebab or caps)

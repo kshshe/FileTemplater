@@ -40,18 +40,6 @@ module.exports = (
   const templateFiles = path.resolve(templateDir, "tmpl");
   const directionDirectory = path.resolve(global.fileRoot, directionDir);
 
-  let namings = {};
-  for (let key in params) {
-    namings[key] = {
-      camel: naming(params[key], "camel"),
-      pascal: naming(params[key], "pascal"),
-      snake: naming(params[key], "snake"),
-      kebab: naming(params[key], "kebab"),
-      caps: naming(params[key], "caps")
-    };
-  }
-  params.namings = namings;
-
   fs.readFile(templateInfo, "utf8", function(err, contents) {
     if (err) {
       console.error(err);
