@@ -68,7 +68,6 @@ module.exports = (
             const basename = path.basename(file);
             const relativeName = path.relative(templateFiles, file);
             fs.readFile(file, "utf8", function(err, contents) {
-              contents = Handlebars.compile(contents)(params);
               if (err) {
                 console.error(err);
                 callback(err);
@@ -79,6 +78,7 @@ module.exports = (
                 );
 
                 let newFileNames = [newFileName];
+                let currentListItems = {};
 
                 let done = false;
                 let fileKey = 0;
@@ -91,6 +91,12 @@ module.exports = (
                       const keyNaming = m[3];
                       if (params[key]) {
                         if (typeof params[key] === "string") {
+                          if (
+                            typeof currentListItems[fileKey] === "undefined"
+                          ) {
+                            currentListItems[fileKey] = {};
+                          }
+                          currentListItems[fileKey][key] = params[key];
                           let newValue = "";
                           if (keyNaming) {
                             newValue = naming(params[key], keyNaming);
@@ -117,6 +123,10 @@ module.exports = (
                               newValue
                             );
                             newFileNames.push(newName);
+                            currentListItems[newFileNames.length - 1] =
+                              { ...currentListItems[fileKey] } || {};
+                            currentListItems[newFileNames.length - 1][key] =
+                              params[key][listKey];
                           }
                           fileKey = 0;
                         }
@@ -137,23 +147,33 @@ module.exports = (
 
                 for (let key in newFileNames) {
                   let newFileName = newFileNames[key];
-
                   shell.mkdir("-p", path.resolve(path.dirname(newFileName)));
-                  fs.writeFile(path.resolve(newFileName), contents, function(
-                    err
-                  ) {
-                    fileNamesProcessed++;
-                    if (fileNamesProcessed === fileNamesCount) {
-                      filesProcessed++;
+
+                  const fileParams = {
+                    ...params,
+                    currentListItem: currentListItems[key]
+                  };
+
+                  console.log(fileParams);
+
+                  const fileContents = Handlebars.compile(contents)(fileParams);
+                  fs.writeFile(
+                    path.resolve(newFileName),
+                    fileContents,
+                    function(err) {
+                      fileNamesProcessed++;
+                      if (fileNamesProcessed === fileNamesCount) {
+                        filesProcessed++;
+                      }
+                      if (err) {
+                        callback(err);
+                        console.error(err);
+                      }
+                      if (filesProcessed === filesCount) {
+                        callback({ directionDir });
+                      }
                     }
-                    if (err) {
-                      callback(err);
-                      console.error(err);
-                    }
-                    if (filesProcessed === filesCount) {
-                      callback({ directionDir });
-                    }
-                  });
+                  );
                 }
               }
             });
