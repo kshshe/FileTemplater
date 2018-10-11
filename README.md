@@ -121,7 +121,7 @@ caps-list:
 
 ### File lists
 
-If you want to make list of files, make filename like this: `#each-yourPropertyName#.txt` or `#each-yourPropertyName_naming#.txt` (naming may be camel, pascal, sname, kebab or caps).
+If you want to make list of files, make filename like this: `#each-yourPropertyName#.txt` or `#each-yourPropertyName_naming#.txt` (naming may be camel, pascal, snake, kebab or caps).
 In file you can use `currentListItem` object where you can find all properies from filename:
 
 ```
