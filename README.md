@@ -11,7 +11,6 @@ It already working but it have many things to do.
 
 - Code testing
 - Template manager in web interface
-- Lists in input types
 - Sharing templates
 - Better interface
 
