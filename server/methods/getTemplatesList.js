@@ -15,6 +15,9 @@ module.exports = (
       callback(result);
     } else {
       let filesCount = files.length;
+      if (filesCount === 0) {
+        callback([]);
+      }
       let filesProcessed = 0;
       for (let key in files) {
         const basename = path.basename(files[key]);

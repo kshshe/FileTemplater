@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 export default class Input extends Component {
   static propTypes = {};
 
-  constructor(props) {
-    super(props);
-  }
-
   renderText(data) {
     return (
       <input

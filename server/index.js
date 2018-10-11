@@ -9,10 +9,45 @@ var serve = serveStatic(path.resolve(__dirname, "../app/build"), {
 });
 var opn = require("opn");
 var shell = require("shelljs");
+var chokidar = require("chokidar");
+var unzip = require("unzip");
 
 var argv = require("minimist")(process.argv.slice(2));
 global.fileRoot = argv.fileRoot;
 global.userRoot = require("os").homedir();
+global.templatesPath = path.resolve(userRoot, ".templates");
+global.exportPath = path.resolve(userRoot, ".templates_export");
+shell.mkdir("-p", exportPath);
+global.importPath = path.resolve(userRoot, ".templates_import");
+shell.mkdir("-p", importPath);
+
+var watcher = chokidar.watch(importPath, {});
+watcher.on("add", archive => {
+  console.log("File added");
+  if (path.extname(archive) === ".zip") {
+    console.log("Archive added");
+    fs.createReadStream(archive)
+      .pipe(unzip.Extract({ path: templatesPath }))
+      .on("finish", function() {
+        console.log("Import done");
+        fs.unlink(archive, () => {
+          return;
+        });
+        setTimeout(() => {
+          global.methods.get_templates_list(null, result => {
+            for (let key in global.connections) {
+              global.connections[key].emit("get_templates_list_result", result);
+            }
+          });
+        }, 100);
+      });
+  } else {
+    console.log("It is not zip archive");
+    fs.unlink(archive, () => {
+      return;
+    });
+  }
+});
 
 fs.exists(path.resolve(userRoot, ".templates"), function(exists) {
   if (!exists) {
@@ -39,9 +74,11 @@ function handler(req, res) {
   serve(req, res, finalhandler(req, res));
 }
 
-const methods = require("./methods");
+global.methods = require("./methods");
 
+global.connections = [];
 io.on("connection", function(socket) {
+  global.connections.push(socket);
   var onevent = socket.onevent;
   socket.onevent = function(packet) {
     var args = packet.data || [];

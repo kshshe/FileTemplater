@@ -1,13 +1,9 @@
-const getFilesList = require("./getFilesList");
-const deleteFile = require("./deleteFile");
-const makeFromTemplate = require("./makeFromTemplate");
-const getTemplatesList = require("./getTemplatesList");
-const getFile = require("./getFile");
-
 module.exports = {
-  get_files_list: getFilesList,
-  delete_file: deleteFile,
-  make_from_template: makeFromTemplate,
-  get_templates_list: getTemplatesList,
-  get_file: getFile
+  get_files_list: require("./getFilesList"),
+  delete_file: require("./deleteFile"),
+  make_from_template: require("./makeFromTemplate"),
+  get_templates_list: require("./getTemplatesList"),
+  get_file: require("./getFile"),
+  open_import_directory: require("./openImportDirectory"),
+  export_all: require("./exportAll")
 };

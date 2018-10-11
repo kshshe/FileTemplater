@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { bindActionCreators } from 'redux';
 import Preloader from '../common/Preloader';
+import Header from '../common/Header';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -26,6 +27,7 @@ class App extends Component {
   render() {
     return <div className="home-app">
         {!this.props.socket && <Preloader />}
+        {this.props.socket && <Header />}
         {this.props.socket && <div className="page-container">{this.props.children}</div>}
       </div>;
   }
