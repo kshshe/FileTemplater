@@ -39,19 +39,40 @@ export default class Input extends Component {
   }
 
   renderList(data) {
+    const values = (data.value || '')
+      .toString()
+      .split(',')
+      .map(item => item.toString());
     return (
       <div>
-        <input
-          className="input"
-          type="text"
-          value={data.value || ''}
-          onChange={e => {
+        {values.map((item, key) => {
+          item = item.trim();
+          return (
+            <input
+              key={key}
+              className="input"
+              type="text"
+              value={item || ''}
+              onChange={e => {
+                if (this.props.onChange) {
+                  let newValues = [...values];
+                  newValues[key] = e.target.value;
+                  this.props.onChange(newValues.filter(item => item.length !== 0).join(', '));
+                }
+              }}
+            />
+          );
+        })}
+        <button
+          className="button"
+          onClick={() => {
             if (this.props.onChange) {
-              this.props.onChange(e.target.value);
+              this.props.onChange(values.filter(item => item.length !== 0).join(', ') + ', ');
             }
           }}
-        />
-        <p className="help">Comma-separated list</p>
+        >
+          Add
+        </button>
       </div>
     );
   }
